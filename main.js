@@ -113,6 +113,14 @@
     });
   });
 
+  /* ---------- Package buttons pre-select the form ---------- */
+  document.querySelectorAll('.js-pkg').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const r = document.querySelector(`input[name="package"][value^="${btn.dataset.pkg}"]`);
+      if (r) r.checked = true;
+    });
+  });
+
   /* ---------- Booking form -> WhatsApp ---------- */
   const form = document.getElementById('bookForm');
   if (form) {
@@ -154,12 +162,13 @@
         `• Date: ${nice}`,
         `• Time: ${fd.get('time')}`,
         `• Guests: ${fd.get('guests')}`,
+        `• Basket: ${fd.get('package')}`,
         `• Occasion: ${fd.get('occasion')}`,
         `• Setting: ${fd.get('setting')}`,
       ];
       const notes = (fd.get('notes') || '').trim();
       if (notes) lines.push(`• Special requests: ${notes}`);
-      lines.push('', 'Could you send me the menu options and a quote? Merci!');
+      lines.push('', 'Could you confirm availability? Merci!');
       window.open(waUrl(lines.join('\n')), '_blank', 'noopener');
     });
   }
